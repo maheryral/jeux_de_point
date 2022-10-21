@@ -46,7 +46,8 @@ body{
 }
 
 #champ td{
-    background-color: rgb(201, 189, 182);
+    transform: scale(2,2);
+    border-color: transparent;
     border-radius: 8px;
     
     
