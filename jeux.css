@@ -53,3 +53,29 @@ body{
     
 
 }
+#droite{
+    position:absolute;
+    top: 211px;
+    left: 405px;
+    width: 45px;
+    height: 2px;
+    background-color: red;
+}
+#od{
+    position:absolute;
+    top: 231px;
+    left: 402px;
+    width: 55px;
+    height: 2px;
+    background-color: red;
+    transform: rotate(40deg);
+}
+#og{
+    position:absolute;
+    top: 231px;
+    left: 402px;
+    width: 55px;
+    height: 2px;
+    background-color: red;
+    transform: rotate(140deg);
+}
