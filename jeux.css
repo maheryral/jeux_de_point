@@ -53,15 +53,31 @@ body{
     
 
 }
+.red{
+    position:absolute;
+    top: 211px;
+    left: 405px;
+    width: 45px;
+    height: 2px;
+   
+}
 #droite{
     position:absolute;
     top: 211px;
     left: 405px;
     width: 45px;
     height: 2px;
-    background-color: red;
+   background-color: red;
 }
-#od{
+.black{
+    position:absolute;
+    top: 211px;
+    left: 405px;
+    width: 45px;
+    height: 2px;
+   
+}
+.og{
     position:absolute;
     top: 231px;
     left: 402px;
@@ -70,7 +86,7 @@ body{
     background-color: red;
     transform: rotate(40deg);
 }
-#og{
+.od{
     position:absolute;
     top: 231px;
     left: 402px;
@@ -78,4 +94,13 @@ body{
     height: 2px;
     background-color: red;
     transform: rotate(140deg);
+}
+.oh{
+    position:absolute;
+    top: 231px;
+    left: 402px;
+    width: 38px;
+    height: 2px;
+    background-color: red;
+    transform: rotate(270deg);
 }
