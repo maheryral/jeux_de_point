@@ -572,7 +572,7 @@ function miverina(init,jeux,joueur,pd,nd){
     else if(pd=='bd'){
         const lpbd=parseInt(jeux.dataset.l)-1// iteration ligne 
         const cpbd=parseInt(jeux.dataset.c)-1// iteration colonne
-        
+        jeux.dataset.nd=''
        miverina(init,$(lpbd+''+cpbd),joueur,$(lpbd+''+cpbd).dataset.pd,$(lpbd+''+cpbd).dataset.nd)
     }
 
@@ -592,41 +592,49 @@ function ligne(ligne,color) {
             top=2
             left=-1
             rot=0
+            $(ligne[i]).dataset.nd=''
         }
         else if ($(ligne[i]).dataset.nd=='hd') {
             top=-15
             left=-1
             rot=-40
+            $(ligne[i]).dataset.nd=''
         }
         else if ($(ligne[i]).dataset.nd=='h') {
             top=-15
             left=-18
             rot=90
+            $(ligne[i]).dataset.nd=''
         }
         else if ($(ligne[i]).dataset.nd=='hg') {
             top=-16
             left=-40
             rot=40
+            $(ligne[i]).dataset.nd=''
         }
         else if ($(ligne[i]).dataset.nd=='bg') {
             top=18
             left=-43
             rot=-40
+            $(ligne[i]).dataset.nd=''
         }
     else if ($(ligne[i]).dataset.nd=='g') {
                 top=2
                 left=-40
                 rot=0
+                $(ligne[i]).dataset.nd=''
             }
         else if ($(ligne[i]).dataset.nd=='b') {
             top=20
             left=-18
             rot=90
+            $(ligne[i]).dataset.nd=''
         }
         else if ($(ligne[i]).dataset.nd=='bd') {
             top=20
             left=5
             rot=40
+            $(ligne[i]).dataset.nd=''
         }
         
         ligneog.style.left=($(ligne[i]).offsetLeft+left)+'px'
