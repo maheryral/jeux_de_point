@@ -1,7 +1,10 @@
 
+function compare(x, y) {
+    return x - y;
+}
+var point=0
 const terrain=document.querySelector('#terrain table')
 const champi=document.querySelector('#champ table')
-
 for (let i = 0; i < 18; i++) {
     const tr=document.createElement('tr')
     terrain.appendChild(tr)
@@ -24,17 +27,19 @@ for (let i = 1; i < 18; i++) {
         td.dataset.nd='d'//next direction
         td.dataset.gau='mahery'
         td.className='chp'
+        td.dataset.etat=''
         tr.appendChild(td)
     }
     
 }
 const champ= document.getElementsByClassName('chp')
-var joueur1=document.getElementById('j1').innerHTML;
-var joueur2=document.getElementById('j2').innerHTML;
+var j1=document.getElementById('j1');
+var j2=document.getElementById('j2');
 var couleur='red'
 var pers='joueur1'
 var teste=false
 var l=[]
+var c=[]
 for (let i = 0; i < champ.length; i++) {
         
     champ[i].addEventListener('click',function () {
@@ -58,17 +63,22 @@ function func(y){
     y.style.backgroundColor=couleur
      y.style.transform='scale(1.8,1.8)'
     //    alert(y.offsetLeft+' et '+y.offsetTop)
+   
+       point=0
             if (couleur=='red') {
                 couleur='black'
                 y.dataset.jeux='red'
                 
                 mandroso(y,y,'red',y.dataset.pd,y.dataset.nd)
                 if (teste==true) {
-                   ligne(l,'red')
+                   ligne(l,c,'red','black')
                    l.length=0
+                   c.length=0
+                   j1.innerHTML=parseInt(j1.innerHTML)+point
                 }
                 else{
                     l.length=0
+                    c.length=0
                 }
                 
             }
@@ -78,134 +88,68 @@ function func(y){
                 couleur='red'
                 mandroso(y,y,'black',y.dataset.pd,y.dataset.nd)
                 if (teste==true) {
-                    ligne(l,'black')
+                    ligne(l,c,'black','red')
                     l.length=0
+                    c.length=0
+                    j2.innerHTML=parseInt(j2.innerHTML)+point
                 }
                 else{
                     l.length=0
+                    c.length=0
                 }
             }
            
-            // droite.style.left=y.offsetLeft+'px'
-            // droite.style.top=(y.offsetTop+8)+'px'
+           
 }
-// function maty(init,jeux,di) {
-
-    // var mandroso=mandroso()
-    // if (mandroso==true) {
-    //     if (j.dataset.j='red') {
-    //         joueur1=parseInt(joueur1)+1
-    //     }
-    //     else{
-    //         joueur2=parseInt(joueur2)+1
-    //     }
-    // }
-// }
 function mandroso(init,jeux,joueur,pd,nd){
     
-   
-    
+    // alert(jeux.dataset.etat)
    
     var vall=parseInt(jeux.dataset.l)
     var valc=parseInt(jeux.dataset.l)
     var ligne=jeux
-    // alert('mandroso: '+init.id+' et '+jeux.id+' et '+joueur+' et '+jeux.dataset.jeux+' et '+pd+' et '+nd)
     if (pd=='') {
         
         if (nd=='d') {
-        //     var ligned=document.createElement('div')
-        //    ligned.className='droite'
-        //   champi.appendChild(ligned)
-        //     ligne=ligned
-        //     ligne.style.display='none'
+        
             vall=parseInt(jeux.dataset.l)
             valc=parseInt(jeux.dataset.c)+1// iteration droite
             
         }
         else if(nd=='hd'){
-            // var ligneod=document.createElement('div')
-            // ligneod.className='od'
-            // champi.appendChild(ligneod)
-            // ligne=ligneod
-            // ligne.style.display='none'
             vall=parseInt(jeux.dataset.l)-1// iteration ligne 
             valc=parseInt(jeux.dataset.c)+1
         }
         else if(nd=='h'){
-            // var ligneh=document.createElement('div')
-            // ligneh.className='h'
-            // champi.appendChild(ligneh)
-            // ligne=ligneh
-            // ligne.style.display='none'
             vall=parseInt(jeux.dataset.l)-1// iteration ligne 
             valc=parseInt(jeux.dataset.c)// iteration colonne
         }
         else if(nd=='hg'){
-        //     var ligneog=document.createElement('div')
-        //    ligneog.className='og'
-        //    champi.appendChild(ligneog)
-        //     ligne=ligneog
-        //     ligne.style.display='none'
             vall=parseInt(jeux.dataset.l)-1// iteration ligne 
             valc=parseInt(jeux.dataset.c)-1// iteration colonne
         }
         else if(nd=='g'){
-        //     var ligned=document.createElement('div')
-        //     ligned.className='droite'
-        //    champi.appendChild(ligned)
-        //     ligne=ligned
-        //     ligne.style.display='none'
             vall=parseInt(jeux.dataset.l)// iteration ligne 
             valc=parseInt(jeux.dataset.c)-1// iteration colonne
         }
         else if(nd=='bg'){
-            // var ligneod=document.createElement('div')
-            // ligneod.className='od'
-            // champi.appendChild(ligneod)
-            // ligne=ligneod
-            // ligne.style.display='none'
             vall=parseInt(jeux.dataset.l)+1// iteration ligne 
             valc=parseInt(jeux.dataset.c)-1// iteration colonne
         }
         else if(nd=='b'){
-            // var ligneh=document.createElement('div')
-            // ligneh.className='h'
-            // champi.appendChild(ligneh)
-            // ligne=ligneh
-            // ligne.style.display='none'
             vall=parseInt(jeux.dataset.l)+1// iteration ligne 
             valc=parseInt(jeux.dataset.c)// iteration colonne
         }
         else if (nd=='bd') {
-            // var ligneog=document.createElement('div')
-            // ligneog.className='og'
-            // champi.appendChild(ligneog)
-            // ligne=ligneog
-            // ligne.style.display='none'
             vall=parseInt(jeux.dataset.l)+1// iteration ligne 
             valc=parseInt(jeux.dataset.c)+1// iteration colonne
         }
         
         // const vald=parseInt(jeux.dataset.c)+1// iteration droite
         
-        if ($(vall+''+valc).dataset.jeux==joueur) {
-            // ligne.style.display='block'
-            // if (nd=='d' || nd=='hd' || nd=='h' || nd=='hg' || nd=='g') {
-            //     ligne.style.top=($(vall+''+valc).offsetTop)+'px'
-            //     ligne.style.left=($(vall+''+valc).offsetLeft)+'px'
-            // }
-            // else{
-            //     ligne.style.top=(jeux.offsetTop)+'px'
-            //    ligne.style.left=( jeux.offsetLeft)+'px'
-
-            // }
-            l.push(jeux.id)
-        //    var find=findPos(jeux)
-           
-            // droite.style.left=(jeux.offsetLeft+5)+'px'
-            // droite.style.top=(jeux.offsetTop-15)+'px'
-            // droite.style.transform='rotate(-40deg)'
-            
+        if ($(vall+''+valc).dataset.jeux==joueur && $(vall+''+valc).dataset.etat!='maty') {
+            l.push(jeux.dataset.l)
+                c.push(jeux.dataset.c)
             if ($(vall+''+valc).id==init.id) {
                 
                 teste=true
@@ -258,21 +202,14 @@ function mandroso(init,jeux,joueur,pd,nd){
     else{
        
         if(nd=='d'){
-        //     var ligned=document.createElement('div')
-        //    ligned.className='droite'
-        //    champi.appendChild(ligned)
-        //     ligne=ligned
-        //     ligne.style.display='none'
             const vald=parseInt(jeux.dataset.c)+1// iteration droite
             if (pd=='g') {
                 jeux.dataset.nd='hd'
                 mandroso(init,jeux,joueur,pd,'hd')
             }
-            else if ($(jeux.dataset.l+''+vald).dataset.jeux==joueur) {
-                // ligne.style.display='block'
-                // ligne.style.top=($(vall+''+valc).offsetTop)+'px'
-                // ligne.style.left=($(vall+''+valc).offsetLeft)+'px'
-                l.push(jeux.id)
+            else if ($(jeux.dataset.l+''+vald).dataset.jeux==joueur && $(jeux.dataset.l+''+vald).dataset.etat!='maty') {
+                l.push(jeux.dataset.l)
+                c.push(jeux.dataset.c)
                 if ($(jeux.dataset.l+''+vald).id==init.id) {
                     teste=true
                 }
@@ -289,22 +226,15 @@ function mandroso(init,jeux,joueur,pd,nd){
             }
         }
        else if(nd=='hd'){
-        // var ligneod=document.createElement('div')
-        // ligneod.className='od'
-        // champi.appendChild(ligneod)
-        // ligne=ligneod
-        // ligne.style.display='none'
             const lvalhd=parseInt(jeux.dataset.l)-1// iteration ligne 
             const cvalhd=parseInt(jeux.dataset.c)+1// iteration colonne
             if (pd=='bg') {
                 jeux.dataset.nd='h'
                 mandroso(init,jeux,joueur,pd,'h')
             }
-            else if ($(lvalhd+''+cvalhd).dataset.jeux==joueur) {
-                // ligne.style.display='block'
-                // ligne.style.top=($(vall+''+valc).offsetTop)+'px'
-                // ligne.style.left=($(vall+''+valc).offsetLeft)+'px'
-                l.push(jeux.id)
+            else if ($(lvalhd+''+cvalhd).dataset.jeux==joueur && $(lvalhd+''+cvalhd).dataset.etat!='maty') {
+                l.push(jeux.dataset.l)
+                c.push(jeux.dataset.c)
                 if ($(lvalhd+''+cvalhd).id==init.id) {
                    teste=true
                 }
@@ -321,22 +251,15 @@ function mandroso(init,jeux,joueur,pd,nd){
             }
         }
         else if(nd=='h'){
-            // var ligneh=document.createElement('div')
-            // ligneh.className='h'
-            // champi.appendChild(ligneh)
-            // ligne=ligneh
-            // ligne.style.display='none'
             const lvalh=parseInt(jeux.dataset.l)-1// iteration ligne 
             const cvalh=parseInt(jeux.dataset.c)// iteration colonne
             if (pd=='b') {
                 jeux.dataset.nd='hg'
                 mandroso(init,jeux,joueur,pd,'hg')
             }
-            else if ($(lvalh+''+cvalh).dataset.jeux==joueur) {
-                // ligne.style.display='block'
-                // ligne.style.top=($(vall+''+valc).offsetTop)+'px'
-                // ligne.style.left=($(vall+''+valc).offsetLeft)+'px'
-                l.push(jeux.id)
+            else if ($(lvalh+''+cvalh).dataset.jeux==joueur && $(lvalh+''+cvalh).dataset.etat!='maty') {
+                l.push(jeux.dataset.l)
+                c.push(jeux.dataset.c)
                 if ($(lvalh+''+cvalh).id==init.id) {
                     teste=true
                 }
@@ -352,22 +275,15 @@ function mandroso(init,jeux,joueur,pd,nd){
             }
         }
         else if(nd=='hg'){
-            // var ligneog=document.createElement('div')
-            // ligneog.className='og'
-            // champi.appendChild(ligneog)
-            //  ligne=ligneog
-            //  ligne.style.display='none'
             const lvalhg=parseInt(jeux.dataset.l)-1// iteration ligne 
             const cvalhg=parseInt(jeux.dataset.c)-1// iteration colonne
             if (pd=='bd') {
                 jeux.dataset.nd='g'
                 mandroso(init,jeux,joueur,pd,'g')
             }
-            else if ($(lvalhg+''+cvalhg).dataset.jeux==joueur) {
-                // ligne.style.display='block'
-                // ligne.style.top=($(vall+''+valc).offsetTop)+'px'
-                // ligne.style.left=($(vall+''+valc).offsetLeft)+'px'
-                l.push(jeux.id)
+            else if ($(lvalhg+''+cvalhg).dataset.jeux==joueur && $(lvalhg+''+cvalhg).dataset.etat!='maty') {
+                l.push(jeux.dataset.l)
+                c.push(jeux.dataset.c)
                 if ($(lvalhg+''+cvalhg).id==init.id) {
                     teste=true
                 }
@@ -384,22 +300,15 @@ function mandroso(init,jeux,joueur,pd,nd){
             }
         }
         else if(nd=='g'){
-            // var ligneod=document.createElement('div')
-            // ligneod.className='od'
-            // champi.appendChild(ligneod)
-            // ligne=ligneod
-            // ligne.style.display='none'
             const lvalg=parseInt(jeux.dataset.l)// iteration ligne 
             const cvalg=parseInt(jeux.dataset.c)-1// iteration colonne
             if (pd=='d') {
                 jeux.dataset.nd='bg'
                 mandroso(init,jeux,joueur,pd,'bg')
             }
-            else if ($(lvalg+''+cvalg).dataset.jeux==joueur) {
-                // ligne.style.display='block'
-                // ligne.style.top=(jeux.offsetTop)+'px'
-                // ligne.style.left=( jeux.offsetLeft)+'px'
-                l.push(jeux.id)
+            else if ($(lvalg+''+cvalg).dataset.jeux==joueur && $(lvalg+''+cvalg).dataset.etat!='maty') {
+                l.push(jeux.dataset.l)
+                c.push(jeux.dataset.c)
                 if ($(lvalg+''+cvalg).id==init.id) {
                     teste=true
                 }
@@ -416,22 +325,15 @@ function mandroso(init,jeux,joueur,pd,nd){
             }
         }
         else if(nd=='bg'){
-            // var ligneod=document.createElement('div')
-            // ligneod.className='od'
-            // champi.appendChild(ligneod)
-            // ligne=ligneod
-            // ligne.style.display='none'
             const lvalbg=parseInt(jeux.dataset.l)+1// iteration ligne 
             const cvalbg=parseInt(jeux.dataset.c)-1// iteration colonne
             if (pd=='hd') {
                 jeux.dataset.nd='b'
                 mandroso(init,jeux,joueur,pd,'b')
             }
-            else if ($(lvalbg+''+cvalbg).dataset.jeux==joueur) {
-                // ligne.style.display='block'
-                // ligne.style.top=(jeux.offsetTop)+'px'
-                // ligne.style.left=( jeux.offsetLeft)+'px'
-                l.push(jeux.id)
+            else if ($(lvalbg+''+cvalbg).dataset.jeux==joueur && $(lvalbg+''+cvalbg).dataset.etat!='maty') {
+                l.push(jeux.dataset.l)
+                c.push(jeux.dataset.c)
                 if ($(lvalbg+''+cvalbg).id==init.id) {
                     teste=true
                 }
@@ -448,22 +350,15 @@ function mandroso(init,jeux,joueur,pd,nd){
             }
         }
         else if(nd=='b'){
-        //     var ligned=document.createElement('div')
-        //     ligned.className='droite'
-        //    champi.appendChild(ligned)
-        //     ligne=ligned
-        //     ligne.style.display='none'
             const lvalb=parseInt(jeux.dataset.l)+1// iteration ligne 
             const cvalb=parseInt(jeux.dataset.c)// iteration colonne
             if (pd=='h') {
                 jeux.dataset.nd='bd'
                 mandroso(init,jeux,joueur,pd,'bd')
             }
-            else if ($(lvalb+''+cvalb).dataset.jeux==joueur) {
-                // ligne.style.display='block'
-                // ligne.style.top=(jeux.offsetTop)+'px'
-                // ligne.style.left=( jeux.offsetLeft)+'px'
-                l.push(jeux.id)
+            else if ($(lvalb+''+cvalb).dataset.jeux==joueur && $(lvalb+''+cvalb).dataset.etat!='maty') {
+                l.push(jeux.dataset.l)
+                c.push(jeux.dataset.c)
                 if ($(lvalb+''+cvalb).id==init.id) {
                     teste=true
                 }
@@ -480,22 +375,14 @@ function mandroso(init,jeux,joueur,pd,nd){
         }
         else if(nd=='bd'){
             
-            // var ligneog=document.createElement('div')
-            // ligneog.className='og'
-            // champi.appendChild(ligneog)
-            // ligne=ligneog
-            // ligne.style.display='none'
-            
             const lvalbd=parseInt(jeux.dataset.l)+1// iteration ligne 
             const cvalbd=parseInt(jeux.dataset.c)+1// iteration colonne
             if (pd=='hg') {
                 miverina(init,jeux,joueur,pd,nd)
             }
-            else if ($(lvalbd+''+cvalbd).dataset.jeux==joueur) {
-                // ligne.style.display='block'
-                // ligne.style.top=(jeux.offsetTop)+'px'
-                // ligne.style.left=( jeux.offsetLeft)+'px'
-                l.push(jeux.id)
+            else if ($(lvalbd+''+cvalbd).dataset.jeux==joueur && $(lvalbd+''+cvalbd).dataset.etat!='maty') {
+                l.push(jeux.dataset.l)
+                c.push(jeux.dataset.c)
                 if ($(lvalbd+''+cvalbd).id==init.id) {
                     teste=true
                 }
@@ -525,6 +412,7 @@ function miverina(init,jeux,joueur,pd,nd){
         const cpd=parseInt(jeux.dataset.c)-1// iteration colonne
         $(lpd+''+cpd).dataset.nd='hd'
         l.pop()
+        c.pop()
         mandroso(init,$(lpd+''+cpd),joueur,$(lpd+''+cpd).dataset.pd,'hd')
     }
     else if(pd=='hd'){
@@ -532,6 +420,7 @@ function miverina(init,jeux,joueur,pd,nd){
         const cphd=parseInt(jeux.dataset.c)-1// iteration colonne
         $(lphd+''+cphd).dataset.nd='h'
         l.pop()
+        c.pop()
         mandroso(init,$(lphd+''+cphd),joueur,$(lphd+''+cphd).dataset.pd,'h')
     }
     else if(pd=='h'){
@@ -539,6 +428,7 @@ function miverina(init,jeux,joueur,pd,nd){
         const cph=parseInt(jeux.dataset.c)// iteration colonne
         $(lph+''+cph).dataset.nd='hg'
         l.pop()
+        c.pop()
         mandroso(init,$(lph+''+cph),joueur,$(lph+''+cph).dataset.pd,'hg')
     }
     else if(pd=='hg'){
@@ -546,6 +436,7 @@ function miverina(init,jeux,joueur,pd,nd){
         const cphg=parseInt(jeux.dataset.c)+1// iteration colonne
         $(lphg+''+cphg).dataset.nd='g'
         l.pop()
+        c.pop()
         mandroso(init,$(lphg+''+cphg),joueur,$(lphg+''+cphg).dataset.pd,'g')
     }
     else if(pd=='g'){
@@ -553,6 +444,7 @@ function miverina(init,jeux,joueur,pd,nd){
         const cpg=parseInt(jeux.dataset.c)+1// iteration colonne
         $(lpg+''+cpg).dataset.nd='bg'
         l.pop()
+        c.pop()
         mandroso(init,$(lpg+''+cpg),joueur,$(lpg+''+cpg).dataset.pd,'bg')
     }
     else if(pd=='bg'){
@@ -560,6 +452,7 @@ function miverina(init,jeux,joueur,pd,nd){
         const cpbg=parseInt(jeux.dataset.c)+1// iteration colonne
         $(lpbg+''+cpbg).dataset.nd='b'
         l.pop()
+        c.pop()
         mandroso(init,$(lpbg+''+cpbg),joueur,$(lpbg+''+cpbg).dataset.pd,'b')
     }
     else if(pd=='b'){
@@ -567,6 +460,7 @@ function miverina(init,jeux,joueur,pd,nd){
         const cpb=parseInt(jeux.dataset.c)// iteration colonne
         $(lpb+''+cpb).dataset.nd='bd'
         l.pop()
+        c.pop()
         mandroso(init,$(lpb+''+cpb),joueur,$(lpb+''+cpb).dataset.pd,'bd')
     }
     else if(pd=='bd'){
@@ -578,80 +472,93 @@ function miverina(init,jeux,joueur,pd,nd){
 
 }
 
-function ligne(ligne,color) {
-  
-    var rot=0
-    var left=0
-    var top=0
+function ligne(ligne,colonne,color,icolor) {
+    var lig=new Object()
+    var li=[]
+    var li=[...new Set(ligne)]
+    li=li.sort(compare)
+    for (let i = 0; i < li.length; i++) {
+        lig[li[i]]=[]
+       
+    }
+    for (let i = 0; i < ligne.length; i++) {
+        lig[ligne[i]].push(colonne[i])
+        lig[ligne[i]].sort(compare)
+        
+    }
+    for (let i = 0; i < li.length; i++) {
+        for (let j = Math.min(...lig[li[i]]); j < Math.max(...lig[li[i]])+1; j++) {
+           if ( $(li[i]+''+j).dataset.jeux == icolor) {
+            $(li[i]+''+j).dataset.etat='maty'
+               point=point+1
+           }
+            
+        }
+       
+    }
+    if (point!=0) {
+        var rot=0
+       var left=0
+       var top=0
     
     for (let i = 0; i < ligne.length; i++) {
+        
+        
         var ligneog=document.createElement('div')
         ligneog.className=color
         champi.appendChild(ligneog)
-        if ($(ligne[i]).dataset.nd=='d') {
+        if ($(ligne[i]+''+colonne[i]).dataset.nd=='d') {
             top=2
             left=-1
             rot=0
-            $(ligne[i]).dataset.nd=''
+            $(ligne[i]+''+colonne[i]).dataset.nd=''
         }
-        else if ($(ligne[i]).dataset.nd=='hd') {
+        else if ($(ligne[i]+''+colonne[i]).dataset.nd=='hd') {
             top=-15
             left=-1
             rot=-40
-            $(ligne[i]).dataset.nd=''
+            $(ligne[i]+''+colonne[i]).dataset.nd=''
         }
-        else if ($(ligne[i]).dataset.nd=='h') {
+        else if ($(ligne[i]+''+colonne[i]).dataset.nd=='h') {
             top=-15
             left=-18
             rot=90
-            $(ligne[i]).dataset.nd=''
+            $(ligne[i]+''+colonne[i]).dataset.nd=''
         }
-        else if ($(ligne[i]).dataset.nd=='hg') {
+        else if ($(ligne[i]+''+colonne[i]).dataset.nd=='hg') {
             top=-16
             left=-40
             rot=40
-            $(ligne[i]).dataset.nd=''
+            $(ligne[i]+''+colonne[i]).dataset.nd=''
         }
-        else if ($(ligne[i]).dataset.nd=='bg') {
+        else if ($(ligne[i]+''+colonne[i]).dataset.nd=='bg') {
             top=18
             left=-43
             rot=-40
-            $(ligne[i]).dataset.nd=''
+            $(ligne[i]+''+colonne[i]).dataset.nd=''
         }
-    else if ($(ligne[i]).dataset.nd=='g') {
+    else if ($(ligne[i]+''+colonne[i]).dataset.nd=='g') {
                 top=2
                 left=-40
                 rot=0
-                $(ligne[i]).dataset.nd=''
+                $(ligne[i]+''+colonne[i]).dataset.nd=''
             }
-        else if ($(ligne[i]).dataset.nd=='b') {
+        else if ($(ligne[i]+''+colonne[i]).dataset.nd=='b') {
             top=20
             left=-18
             rot=90
-            $(ligne[i]).dataset.nd=''
+            $(ligne[i]+''+colonne[i]).dataset.nd=''
         }
-        else if ($(ligne[i]).dataset.nd=='bd') {
+        else if ($(ligne[i]+''+colonne[i]).dataset.nd=='bd') {
             top=20
             left=5
             rot=40
-            $(ligne[i]).dataset.nd=''
+            $(ligne[i]+''+colonne[i]).dataset.nd=''
         }
-        
-        ligneog.style.left=($(ligne[i]).offsetLeft+left)+'px'
-        ligneog.style.top=($(ligne[i]).offsetTop+top)+'px'
+        ligneog.style.left=($(ligne[i]+''+colonne[i]).offsetLeft+left)+'px'
+        ligneog.style.top=($(ligne[i]+''+colonne[i]).offsetTop+top)+'px'
         ligneog.style.transform='rotate('+rot+'deg)'
         ligneog.style.backgroundColor=color
     }
+    }
 }
-// function findPos(obj){
-//     var left = top = 0;
-//     if (obj.offsetParent) {
-//         left = obj.offsetLeft
-//         top = obj.offsetTop
-//         while (obj = obj.offsetParent) {
-//             left += obj.offsetLeft
-//             top += obj.offsetTop
-//         }
-//     }
-//     return [left,top];
-// }
