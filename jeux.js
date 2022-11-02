@@ -152,7 +152,7 @@ function mandroso(init,jeux,joueur,pd,nd){
    
     var vall=parseInt(jeux.dataset.l)
     var valc=parseInt(jeux.dataset.l)
-    var ligne=jeux
+    // var ligne=jeux
     if (pd=='') {
         
         if (nd=='d') {
@@ -194,9 +194,10 @@ function mandroso(init,jeux,joueur,pd,nd){
         // alert('etat = '+$(vall+''+valc).dataset.etat)
         if ($(vall+''+valc).dataset.jeux==joueur && $(vall+''+valc).dataset.etat!='maty' && $(vall+''+valc).dataset.etat!='ktk' ) {
            
-            // l.push(jeux.dataset.l)
-            // c.push(jeux.dataset.c)
+            l.push(jeux.dataset.l)
+            c.push(jeux.dataset.c)
                 premier=$(vall+''+valc)
+                
             if ($(vall+''+valc).id==init.id ) {
                 
                 testes=true
@@ -959,13 +960,13 @@ function test(je,pr,lign,coln,icol){
     }
 }
 function lgn(ligne,colonne,color) {
-    alert('ligne')
+    
         var rot=0
        var left=0
        var top=0
     
     for (let i = 0; i < ligne.length; i++) {
-        
+        alert('id= '+$(ligne[i]+''+colonne[i]).id+' '+$(ligne[i]+''+colonne[i]).dataset.nd)
         
         var ligneog=document.createElement('div')
         ligneog.className=color
