@@ -1,17 +1,53 @@
 body{
-    background-color: black;
+    background-color: rgba(198, 176, 176, 0.221);
+}
+#acceuil{
+    width: auto;
+    height: auto;
+    background-color: rgba(72, 2, 2, 0.658);
+    position: absolute;
+    top:200px;
+    left: 560px;
+    z-index: 999;
+    border-radius: 8px;
+    transform: scale(1.2,1.2);
+}
+#acceuil table{
+    width: 420px;
+    height: 110px;
+    margin-bottom: 40px;
+}
+#acceuil table td{
+    font-size: 23px;
+    font-weight: bold;
+  color: rgb(242, 255, 0);
+}
+#acceuil table input[type='text']{
+    border-radius: 6px;
+    width: 60%;
+    height: 30px;
+}
+#acceuil input[type='submit']{
+    background-color: rgb(255, 255, 0);
+    border-radius: 6px;
+    width: 50%;
+    height: 30px;
+    position: relative;
+    left: 80px;
 }
 #terrain{
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     position: absolute;
     top: 70px;
     left: 0px;
     width: 100%;
     height: auto;
+   
 }
 #terrain table{
     width: 100%;
     height: 50%;
+    
 }
 #terrain table td{
     height: 30px;

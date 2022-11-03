@@ -8,12 +8,35 @@
     <title>jeux de point</title>
 </head>
 <body>
+   <div id="acceuil">
+    
+        <table id="jou1">
+            <tr>
+                <td colspan="2" align="center"> JOUEUR1 </td>
+            </tr>
+            <tr>
+                <td> <input type="text" name="nom1" required  placeholder="NOM JOUEUR 1"></td>
+                <td> <input type="color" name="col1" required placeholder="COLOR JOUEUR 1"></td>
+            </tr>
+        </table>
+        <table id="jou1">
+            <tr>
+                <td  colspan="2" align="center"> JOUEUR2 </td>
+            </tr>
+            <tr>
+                <td> <input type="text" name="nom2" required placeholder="NOM JOUEUR 2"></td>
+                <td> <input type="color" name="col2" required  placeholder="COLOR JOUEUR 2"></td>
+            </tr>
+        </table>
+        <input type="submit" value="JOUER">
+    
+   </div>
     <div id="title"> 
         <div class="joueur " style="color:rgb(231, 64, 64)">
-            Joueur1: <strong id='j1'> 0 </strong>
+            <strong id="nomj1"> Joueur1 </strong> : <strong id='j1'> 0 </strong>
               </div>
         <div class ='joueur' style="color:rgb(71, 226, 32)"> 
-            Joueur2: <strong id="j2"> 0 </strong>
+            <strong id="nomj2"> Joueur2 </strong> : <strong id="j2"> 0 </strong>
         </div>
     </div>
     <div id="terrain" >

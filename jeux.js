@@ -1,9 +1,27 @@
-
+const save=document.querySelector('#acceuil input[type=submit]')
+const acceuil=$('acceuil')
+const terrain=document.querySelector('#terrain table')
+const nomj1=$('nomj1')
+const nomj2=$('nomj2')
+var jou1=''
+var col1=''
+var jou2=''
+var col2=''
+save.addEventListener('click',function () {
+   
+    jou1=document.querySelector('#acceuil input[name=nom1]').value
+    col1=document.querySelector('#acceuil input[name=col1]').value
+    jou2=document.querySelector('#acceuil input[name=nom2]').value
+    col2=document.querySelector('#acceuil input[name=col2]').value
+   acceuil.style.display='none'
+   nomj1.innerHTML=jou1
+   nomj2.innerHTML=jou2
+//    alert('jou1= '+jou1+' col1= '+col1+' jou2= '+jou2+' col2= '+col2)
+})
 function compare(x, y) {
     return x - y;
 }
 var point=0
-const terrain=document.querySelector('#terrain table')
 const champi=document.querySelector('#champ table')
 for (let i = 0; i < 18; i++) {
     const tr=document.createElement('tr')
@@ -32,10 +50,12 @@ for (let i = 1; i < 18; i++) {
     }
     
 }
+
 const champ= document.getElementsByClassName('chp')
 var j1=document.getElementById('j1');
 var j2=document.getElementById('j2');
-var couleur='red'
+var couleur=col1
+
 var pers='joueur1'
 var testes=false
 var testes2=false
@@ -47,7 +67,6 @@ var dernier=''
 var icolor=''
 
 for (let i = 0; i < champ.length; i++) {
-        
     champ[i].addEventListener('click',function () {
         func(this)
     })
@@ -71,23 +90,26 @@ function func(y){
     //    alert(y.offsetLeft+' et '+y.offsetTop)
     testes=false
        point=0
-            if (couleur=='red') {
-                couleur='black'
-                y.dataset.jeux='red'
+            if (couleur==col1) {
+                l.length=0
+                c.length=0
+                // alert('ligndeb= '+l+'coldeb= '+c)
+                couleur=col2
+                y.dataset.jeux=col1
                 
-                mandroso(y,y,'red',y.dataset.pd,y.dataset.nd)
+                mandroso(y,y,col1,y.dataset.pd,y.dataset.nd)
                 // if (testes==true) {
-                //     test(dernier,premier,l,c,'black')
+                //     test(dernier,premier,l,c,col2)
                     // alert(testes2)
                 //     if (testes2==true) {
-                //         ligne(l,c,'red')
+                //         ligne(l,c,col1)
                 //         tid.length=0
                 //         l.length=0
                 //         c.length=0
                 //         j1.innerHTML=parseInt(j1.innerHTML)+point
                 //     }
                 //     else{
-                //         verification(y,dernier,'red',dernier.dataset.pd,dernier.dataset.nd)
+                //         verification(y,dernier,col1,dernier.dataset.pd,dernier.dataset.nd)
                 //     }
                   
                   
@@ -110,21 +132,23 @@ function func(y){
                 
             }
             else  {
-                
-                y.dataset.jeux='black'
-                couleur='red'
-                mandroso(y,y,'black',y.dataset.pd,y.dataset.nd)
+                l.length=0
+                c.length=0
+                // alert('ligndeb= '+l+'coldeb= '+c)
+                y.dataset.jeux=col2
+                couleur=col1
+                mandroso(y,y,col2,y.dataset.pd,y.dataset.nd)
                 // if (testes==true) {
-                //     test(dernier,premier,l,c,'red')
+                //     test(dernier,premier,l,c,col1)
                 //     if (testes2==true) {
-                //         ligne(l,c,'black')
+                //         ligne(l,c,col2)
                 //         tid.length=0
                 //         l.length=0
                 //         c.length=0
                 //         j2.innerHTML=parseInt(j2.innerHTML)+point
                 //     }
                 //     else{
-                //         verification(y,dernier,'black',dernier.dataset.pd,dernier.dataset.nd)
+                //         verification(y,dernier,col2,dernier.dataset.pd,dernier.dataset.nd)
                 //     }
                    
                 // }
@@ -208,7 +232,7 @@ function mandroso(init,jeux,joueur,pd,nd){
                 //     tid.length=0
                 //     l.length=0
                 //     c.length=0
-                //     if (joueur=='red') {
+                //     if (joueur==col1) {
                 //         j1.innerHTML=parseInt(j1.innerHTML)+point
                 //     }
                 //     else{
@@ -306,26 +330,26 @@ function mandroso(init,jeux,joueur,pd,nd){
                 mandroso(init,jeux,joueur,pd,'hd')
                
             }
-            else if ($(jeux.dataset.l+''+vald).dataset.jeux==joueur && ($(jeux.dataset.l+''+vald).dataset.etat!='maty' || $(jeux.dataset.l+''+vald).dataset.etat!='ktk')) {
+            else if ($(jeux.dataset.l+''+vald).dataset.jeux==joueur && $(jeux.dataset.l+''+vald).dataset.etat!='maty' && $(jeux.dataset.l+''+vald).dataset.etat!='ktk') {
                
                 // l.push(jeux.dataset.l)
                 // c.push(jeux.dataset.c)
                 
                 if ($(jeux.dataset.l+''+vald).id==init.id) {
-                    // if (init.dataset.jeux=='red') {
-                    //     icolor='black'
+                    // if (init.dataset.jeux==col1) {
+                    //     icolor=col2
                     // }
                     // else{
-                    //  icolor='red'
+                    //  icolor=col1
                     // }
                     // test(jeux,premier,l,c,icolor)
                     dernier=jeux
                     testes=true
-                    if (joueur=='red') {
-                        icol='black'
+                    if (joueur==col1) {
+                        icol=col2
                     }
                     else{
-                        icol='red'
+                        icol=col1
                     }
                     test(dernier,premier,l,c,icol)
                 // alert(testes2)
@@ -334,7 +358,7 @@ function mandroso(init,jeux,joueur,pd,nd){
                     tid.length=0
                     l.length=0
                     c.length=0
-                    if (joueur=='red') {
+                    if (joueur==col1) {
                         j1.innerHTML=parseInt(j1.innerHTML)+point
                     }
                     else{
@@ -378,26 +402,26 @@ function mandroso(init,jeux,joueur,pd,nd){
                 jeux.dataset.nd='h'
                 mandroso(init,jeux,joueur,pd,'h')
             }
-            else if ($(lvalhd+''+cvalhd).dataset.jeux==joueur && ($(lvalhd+''+cvalhd).dataset.etat!='maty'||$(lvalhd+''+cvalhd).dataset.etat!='ktk' )) {
+            else if ($(lvalhd+''+cvalhd).dataset.jeux==joueur && $(lvalhd+''+cvalhd).dataset.etat!='maty'&& $(lvalhd+''+cvalhd).dataset.etat!='ktk' ) {
                 
                 // l.push(jeux.dataset.l)
                 // c.push(jeux.dataset.c)
                 if ($(lvalhd+''+cvalhd).id==init.id ) {
-                    // if (init.dataset.jeux=='red') {
-                    //     icolor='black'
+                    // if (init.dataset.jeux==col1) {
+                    //     icolor=col2
                     // }
                     // else{
-                    //  icolor='red'
+                    //  icolor=col1
                     // }
                     // test(jeux,premier,l,c,icolor)
                     // alert(testes)
                     testes=true
                     dernier=jeux
-                    if (joueur=='red') {
-                        icol='black'
+                    if (joueur==col1) {
+                        icol=col2
                     }
                     else{
-                        icol='red'
+                        icol=col1
                     }
                     test(dernier,premier,l,c,icol)
                     
@@ -407,7 +431,7 @@ function mandroso(init,jeux,joueur,pd,nd){
                         tid.length=0
                         l.length=0
                         c.length=0
-                        if (joueur=='red') {
+                        if (joueur==col1) {
                             j1.innerHTML=parseInt(j1.innerHTML)+point
                         }
                         else{
@@ -451,27 +475,27 @@ function mandroso(init,jeux,joueur,pd,nd){
                 jeux.dataset.nd='hg'
                 mandroso(init,jeux,joueur,pd,'hg')
             }
-            else if ($(lvalh+''+cvalh).dataset.jeux==joueur && ($(lvalh+''+cvalh).dataset.etat!='maty' || $(lvalh+''+cvalh).dataset.etat!='ktk')) {
+            else if ($(lvalh+''+cvalh).dataset.jeux==joueur && $(lvalh+''+cvalh).dataset.etat!='maty' && $(lvalh+''+cvalh).dataset.etat!='ktk') {
                 // l.push(jeux.dataset.l)
                 // c.push(jeux.dataset.c)
                 
                 if ($(lvalh+''+cvalh).id==init.id) {
-                    // if (init.dataset.jeux=='red') {
-                    //     icolor='black'
+                    // if (init.dataset.jeux==col1) {
+                    //     icolor=col2
                     // }
                     // else{
-                    //  icolor='red'
+                    //  icolor=col1
                     // }
                     // test(jeux,premier,l,c,icolor)
                     
                     testes=true
                     dernier=jeux
                     
-                    if (joueur=='red') {
-                        icol='black'
+                    if (joueur==col1) {
+                        icol=col2
                     }
                     else{
-                        icol='red'
+                        icol=col1
                     }
                     test(dernier,premier,l,c,icol)
                     // alert(testes2)
@@ -480,7 +504,7 @@ function mandroso(init,jeux,joueur,pd,nd){
                         tid.length=0
                         l.length=0
                         c.length=0
-                        if (joueur=='red') {
+                        if (joueur==col1) {
                             j1.innerHTML=parseInt(j1.innerHTML)+point
                         }
                         else{
@@ -516,25 +540,25 @@ function mandroso(init,jeux,joueur,pd,nd){
                 jeux.dataset.nd='g'
                 mandroso(init,jeux,joueur,pd,'g')
             }
-            else if ($(lvalhg+''+cvalhg).dataset.jeux==joueur && ($(lvalhg+''+cvalhg).dataset.etat!='maty' || $(lvalhg+''+cvalhg).dataset.etat!='ktk')) {
+            else if ($(lvalhg+''+cvalhg).dataset.jeux==joueur && $(lvalhg+''+cvalhg).dataset.etat!='maty' && $(lvalhg+''+cvalhg).dataset.etat!='ktk') {
                 // l.push(jeux.dataset.l)
                 // c.push(jeux.dataset.c)
                 
                 if ($(lvalhg+''+cvalhg).id==init.id ) {
-                    // if (init.dataset.jeux=='red') {
-                    //     icolor='black'
+                    // if (init.dataset.jeux==col1) {
+                    //     icolor=col2
                     // }
                     // else{
-                    //  icolor='red'
+                    //  icolor=col1
                     // }
                     // test(jeux,premier,l,c,icolor)
                     testes=true
                     dernier=jeux
-                    if (joueur=='red') {
-                        icol='black'
+                    if (joueur==col1) {
+                        icol=col2
                     }
                     else{
-                        icol='red'
+                        icol=col1
                     }
                     test(dernier,premier,l,c,icol)
                     // alert(testes2)
@@ -543,7 +567,7 @@ function mandroso(init,jeux,joueur,pd,nd){
                         tid.length=0
                         l.length=0
                         c.length=0
-                        if (joueur=='red') {
+                        if (joueur==col1) {
                             j1.innerHTML=parseInt(j1.innerHTML)+point
                         }
                         else{
@@ -579,27 +603,27 @@ function mandroso(init,jeux,joueur,pd,nd){
                 jeux.dataset.nd='bg'
                 mandroso(init,jeux,joueur,pd,'bg')
             }
-            else if ($(lvalg+''+cvalg).dataset.jeux==joueur && ($(lvalg+''+cvalg).dataset.etat!='maty' || $(lvalg+''+cvalg).dataset.etat!='ktk')) {
+            else if ($(lvalg+''+cvalg).dataset.jeux==joueur && $(lvalg+''+cvalg).dataset.etat!='maty' && $(lvalg+''+cvalg).dataset.etat!='ktk') {
                 
                 // l.push(jeux.dataset.l)
                 // c.push(jeux.dataset.c)
                
                 if ($(lvalg+''+cvalg).id==init.id ) {
-                    // if (init.dataset.jeux=='red') {
-                    //     icolor='black'
+                    // if (init.dataset.jeux==col1) {
+                    //     icolor=col2
                     // }
                     // else{
-                    //  icolor='red'
+                    //  icolor=col1
                     // }
                   
                 //    test(jeux,premier,l,c,icolor)
                 testes=true
                 dernier=jeux
-                if (joueur=='red') {
-                    icol='black'
+                if (joueur==col1) {
+                    icol=col2
                 }
                 else{
-                    icol='red'
+                    icol=col1
                 }
                 test(dernier,premier,l,c,icol)
                 // alert(testes2)
@@ -608,7 +632,7 @@ function mandroso(init,jeux,joueur,pd,nd){
                     tid.length=0
                     l.length=0
                     c.length=0
-                    if (joueur=='red') {
+                    if (joueur==col1) {
                         j1.innerHTML=parseInt(j1.innerHTML)+point
                     }
                     else{
@@ -645,25 +669,25 @@ function mandroso(init,jeux,joueur,pd,nd){
                 jeux.dataset.nd='b'
                 mandroso(init,jeux,joueur,pd,'b')
             }
-            else if ($(lvalbg+''+cvalbg).dataset.jeux==joueur && ($(lvalbg+''+cvalbg).dataset.etat!='maty' || $(lvalbg+''+cvalbg).dataset.etat!='ktk')) {
+            else if ($(lvalbg+''+cvalbg).dataset.jeux==joueur && $(lvalbg+''+cvalbg).dataset.etat!='maty' && $(lvalbg+''+cvalbg).dataset.etat!='ktk') {
                 // l.push(jeux.dataset.l)
                 // c.push(jeux.dataset.c)
                
                 if ($(lvalbg+''+cvalbg).id==init.id ) {
-                    // if (init.dataset.jeux=='red') {
-                    //     icolor='black'
+                    // if (init.dataset.jeux==col1) {
+                    //     icolor=col2
                     // }
                     // else{
-                    //  icolor='red'
+                    //  icolor=col1
                     // }
                     // test(jeux,premier,l,c,icolor)
                     testes=true
                     dernier=jeux
-                    if (joueur=='red') {
-                        icol='black'
+                    if (joueur==col1) {
+                        icol=col2
                     }
                     else{
-                        icol='red'
+                        icol=col1
                     }
                     test(dernier,premier,l,c,icol)
                     // alert(testes2)
@@ -672,7 +696,7 @@ function mandroso(init,jeux,joueur,pd,nd){
                         tid.length=0
                         l.length=0
                         c.length=0
-                        if (joueur=='red') {
+                        if (joueur==col1) {
                             j1.innerHTML=parseInt(j1.innerHTML)+point
                         }
                         else{
@@ -712,25 +736,25 @@ function mandroso(init,jeux,joueur,pd,nd){
                 jeux.dataset.nd='bd'
                 mandroso(init,jeux,joueur,pd,'bd')
             }
-            else if ($(lvalb+''+cvalb).dataset.jeux==joueur && ($(lvalb+''+cvalb).dataset.etat!='maty' || $(lvalb+''+cvalb).dataset.etat!='ktk')) {
+            else if ($(lvalb+''+cvalb).dataset.jeux==joueur && $(lvalb+''+cvalb).dataset.etat!='maty' && $(lvalb+''+cvalb).dataset.etat!='ktk') {
                 // l.push(jeux.dataset.l)
                 // c.push(jeux.dataset.c)
                
                 if ($(lvalb+''+cvalb).id==init.id ) {
-                    // if (init.dataset.jeux=='red') {
-                    //     icolor='black'
+                    // if (init.dataset.jeux==col1) {
+                    //     icolor=col2
                     // }
                     // else{
-                    //  icolor='red'
+                    //  icolor=col1
                     // }
                     // test(jeux,premier,l,c,icolor)
                     testes=true
                     dernier=jeux
-                    if (joueur=='red') {
-                        icol='black'
+                    if (joueur==col1) {
+                        icol=col2
                     }
                     else{
-                        icol='red'
+                        icol=col1
                     }
                     test(dernier,premier,l,c,icol)
                     // alert(testes2)
@@ -739,7 +763,7 @@ function mandroso(init,jeux,joueur,pd,nd){
                         tid.length=0
                         l.length=0
                         c.length=0
-                        if (joueur=='red') {
+                        if (joueur==col1) {
                             j1.innerHTML=parseInt(j1.innerHTML)+point
                         }
                         else{
@@ -775,35 +799,35 @@ function mandroso(init,jeux,joueur,pd,nd){
             if (pd=='hg' || $(lvalbd+''+cvalbd).dataset.etat=='ktk') {
                 miverina(init,jeux,joueur,pd,nd)
             }
-            else if ($(lvalbd+''+cvalbd).dataset.jeux==joueur && ($(lvalbd+''+cvalbd).dataset.etat!='maty' || $(lvalbd+''+cvalbd).dataset.etat!='ktk')) {
+            else if ($(lvalbd+''+cvalbd).dataset.jeux==joueur && $(lvalbd+''+cvalbd).dataset.etat!='maty' && $(lvalbd+''+cvalbd).dataset.etat!='ktk') {
                 // l.push(jeux.dataset.l)
                 // c.push(jeux.dataset.c)
                
                 if ($(lvalbd+''+cvalbd).id==init.id ) {
-                    // if (init.dataset.jeux=='red') {
-                    //     icolor='black'
+                    // if (init.dataset.jeux==col1) {
+                    //     icolor=col2
                     // }
                     // else{
-                    //  icolor='red'
+                    //  icolor=col1
                     // }
                     // test(jeux,premier,l,c,icolor)
                     testes=true
                     dernier=jeux
-                    if (joueur=='red') {
-                        icol='black'
+                    if (joueur==col1) {
+                        icol=col2
                     }
                     else{
-                        icol='red'
+                        icol=col1
                     }
                     test(dernier,premier,l,c,icol)
                     // alert(testes2)
                     if (testes2==true) {
-                        alert('l = '+l+' c ='+c+'joueur= '+joueur)
+                        // alert('l = '+l+' c ='+c+'joueur= '+joueur)
                         lgn(l,c,joueur)
                         tid.length=0
                         l.length=0
                         c.length=0
-                        if (joueur=='red') {
+                        if (joueur==col1) {
                             j1.innerHTML=parseInt(j1.innerHTML)+point
                         }
                         else{
@@ -938,7 +962,8 @@ function test(je,pr,lign,coln,icol){
    
     for (let i = 0; i < li.length; i++) {
         for (let j = Math.min(...lig[li[i]]); j < Math.max(...lig[li[i]])+1; j++) {
-           if ( $(li[i]+''+j).dataset.jeux == icol) {
+           if ( $(li[i]+''+j).dataset.jeux == icol &&  $(li[i]+''+j).dataset.etat!='maty' ) {
+           
             $(li[i]+''+j).dataset.etat='maty'
                point=point+1
            }
@@ -956,20 +981,41 @@ function test(je,pr,lign,coln,icol){
         // }
         // l.length=0
         // c.length=0
+        // alert('ligneteste= '+lign+' colonne teste= '+coln)
         testes2=false
     }
 }
 function lgn(ligne,colonne,color) {
-    
+ 
+    // alert('ligne= '+ligne+' colonne=  '+colonne+' color= '+color)
+    for (let i = 0; i < tid.length; i++) {
+        // // alert('etat mbol nisy= '+$(tid[i]).dataset.etat)
+        // $(tid[i]).dataset.nd=''
+        // $(tid[i]).dataset.pd=''
+        if ( $(tid[i]).dataset.etat!='maty') {
+            $(tid[i]).dataset.etat=''
+        }
+        
+        // alert('etat tsis= '+$(tid[i]).dataset.etat)
+    }
         var rot=0
        var left=0
        var top=0
-    
+    //  color.style.position='absolute';
+    //  color.style.top='211px';
+    //  color.style.left='405px';
+    //  color.style.position='absolute';
     for (let i = 0; i < ligne.length; i++) {
-        alert('id= '+$(ligne[i]+''+colonne[i]).id+' '+$(ligne[i]+''+colonne[i]).dataset.nd)
+        // alert('id= '+$(ligne[i]+''+colonne[i]).id+' '+$(ligne[i]+''+colonne[i]).dataset.nd)
         
         var ligneog=document.createElement('div')
         ligneog.className=color
+         ligneog.style.position='absolute';
+     ligneog.style.top='211px';
+     ligneog.style.left='405px';
+     ligneog.style.width='45px';
+     ligneog.style.height='2px';
+    //  alert(color)
         champi.appendChild(ligneog)
         if ($(ligne[i]+''+colonne[i]).dataset.nd=='d') {
             top=2
@@ -1019,6 +1065,7 @@ function lgn(ligne,colonne,color) {
             rot=40
             $(ligne[i]+''+colonne[i]).dataset.nd=''
         }
+        
         ligneog.style.left=($(ligne[i]+''+colonne[i]).offsetLeft+left)+'px'
         ligneog.style.top=($(ligne[i]+''+colonne[i]).offsetTop+top)+'px'
         ligneog.style.transform='rotate('+rot+'deg)'
